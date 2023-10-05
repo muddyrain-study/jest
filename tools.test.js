@@ -1,88 +1,81 @@
-const { describe, expect, test } = require('@jest/globals');
+const {
+  describe,
+  expect,
+  test,
+  beforeEach,
+  afterEach,
+  beforeAll,
+  afterAll,
+  jest: Jest,
+} = require('@jest/globals');
 const { sum, sub, mul, div } = require('./tools.js');
 
-test('测试加法', () => {
-  expect(sum(1, 2)).toBe(3);
-  expect(sum(1, 2)).not.toBe(4);
+test('基本演示', () => {
+  const mock = Jest.fn();
+  // 设置返回值为 42
+  mock.mockReturnValue(42);
+  expect(mock()).toBe(42);
 });
 
-test('深度比较对象', () => {
-  const stu = { name: '张三', score: { html: 100, css: 90 } };
-  expect(stu).not.toBe({ name: '张三', score: { html: 100, css: 90 } });
-  expect(stu).toEqual({ name: '张三', score: { html: 100, css: 90 } });
+test('内置实现', () => {
+  const mock = Jest.fn(x => 100 + x);
+  expect(mock(1)).toBe(101);
 });
 
-test('布尔值相关匹配器', () => {
-  const n = null;
-  expect(n).toBeFalsy();
-  expect(n).not.toBeTruthy();
+const arr = [1, 2, 3];
 
-  const a = 0;
-  expect(a).toBeFalsy();
-  expect(a).not.toBeTruthy();
-});
-
-test('无参匹配器', () => {
-  const n = null;
-  expect(n).toBeNull();
-  expect(n).toBeDefined();
-  expect(n).not.toBeUndefined();
-  const a = 0;
-  expect(a).not.toBeNull();
-  expect(a).toBeDefined();
-  expect(a).not.toBeUndefined();
-});
-
-test('数值相关匹配器', () => {
-  const value1 = 4;
-  expect(value1).toBeGreaterThan(3);
-  expect(value1).toBeGreaterThanOrEqual(4);
-
-  expect(value1).toBeLessThan(5);
-  expect(value1).toBeLessThanOrEqual(4);
-
-  const value2 = 0.1 + 0.2;
-  expect(value2).toBeCloseTo(0.3, 5);
-});
-
-const shoppingList = [
-  'diapers',
-  'kleenex',
-  'trash bags',
-  'paper towels',
-  'milk',
-];
-test('数组相关匹配器', () => {
-  expect(shoppingList).toContain('milk');
-  // toContain 进行的是全等比较，也就是严格比较
-  expect([1, 2, 3]).not.toContain('1');
-  expect([{ name: '张三' }, { name: '李四' }]).not.toContain({ name: '张三' });
-  // toContain 还可以用来检测一个字符串是否是另一个字符串的子串
-  expect('this is a test').toContain('test');
-  // 也可以用到集合（set）里面
-  expect(new Set(shoppingList)).toContain('milk');
-});
-
-function compileCode() {
-  throw new Error('aaa you are using the wrong JDK bbb');
+function forEach(arr, callback) {
+  for (let index = 0; index < arr.length; index++) {
+    callback(arr[index]);
+  }
 }
 
-test('异常相关的匹配器', () => {
-  expect(() => compileCode()).toThrow();
-  // toThrow 里面可以传递不同的参数
-  expect(() => compileCode()).toThrow(Error);
-  expect(() => compileCode()).toThrow('you are using the wrong JDK');
-  expect(() => compileCode()).toThrow(/JDK/);
+test('测试forEach是否正确', () => {
+  // 由于 forEach 中依赖了 callback，因此我们可以创建一个模拟函数来模拟这个 callback
+  const mockCallback = jest.fn(x => 100 + x);
+  forEach(arr, mockCallback);
+
+  // 接下来就进入到测试环节，我们可以利用模拟函数上面的诸多方法来进行一个验证
+  //   [
+  //     [ 1 ],
+  //     [ 2 ],
+  //     [ 3 ]
+  //   ];
+  expect(mockCallback.mock.calls).toHaveLength(3);
+
+  // 测试每一次调用 callback 的时候传入的参数是否符合预期
+  expect(mockCallback.mock.calls[0][0]).toBe(1);
+  expect(mockCallback.mock.calls[1][0]).toBe(2);
+  expect(mockCallback.mock.calls[2][0]).toBe(3);
+
+  console.log(mockCallback.mock.results);
+  // 针对每一次 callback 被调用后的返回值进行测试
+  expect(mockCallback.mock.results[0].value).toBe(101);
+  expect(mockCallback.mock.results[1].value).toBe(102);
+  expect(mockCallback.mock.results[2].value).toBe(103);
+
+  // 模拟函数是否被调用过
+  expect(mockCallback).toHaveBeenCalled();
+  // 前面在调用的时候是否有参数为 1 以及参数为 2 的调用
+  expect(mockCallback).toHaveBeenCalledWith(1);
+  expect(mockCallback).toHaveBeenCalledWith(2);
+  // 还可以对模拟函数的参数进行一个边界判断，判断最后一次调用是否传入的参数为 3
+  expect(mockCallback).toHaveBeenLastCalledWith(3);
 });
 
-const arr = ['张三'];
-test('上面的数组不包含某一项', () => {
-  expect(['李四', '王武', '赵六']).toEqual(expect.not.arrayContaining(arr));
-});
-const obj = { name: '张三' };
-test('对象不包含上面的键值对', () => {
-  expect({
-    age: 18,
-    name: '李四',
-  }).toEqual(expect.not.objectContaining(obj));
+async function fetchData() {
+  const res = await fetch('https://www.example.com/data');
+  const data = await res.json();
+  return data;
+}
+// 创建了一个空的模拟函数
+const fetchDataMock = Jest.fn();
+const fakeData = { id: 1, name: 'muddyrain' };
+// 设置该模拟函数的实现
+fetchDataMock.mockImplementation(() => Promise.resolve(fakeData));
+// 通过模拟函数的一些方法来设置该模拟函数的行为
+
+test('模拟网络请求正常', async () => {
+  const data = await fetchDataMock();
+  expect(data).toEqual({ id: 1, name: 'muddyrain' });
 });
