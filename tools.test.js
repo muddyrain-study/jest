@@ -10,16 +10,9 @@ const {
 } = require('@jest/globals');
 const { sum, sub, mul, div } = require('./tools.js');
 
-const userData = require('./users.json');
-const { default: axios } = require('axios');
-Jest.mock('axios', () => {
-  return {
-    get: Jest.fn(() => Promise.resolve(userData)),
-  };
-});
-
-test('测试异步请求', async () => {
-  expect((await axios.get('http://127.0.0.1:5500/users.json')).data).toEqual(
-    userData
-  );
+test('测试加法', () => {
+  expect(sum(1, 2)).toBe(3);
+  expect(sub(10, 5)).toBe(5);
+  expect(mul(2, 3)).toBe(6);
+  expect(div(10, 2)).toBe(5);
 });

@@ -19,7 +19,16 @@ const config = {
 
   // Indicates whether the coverage information should be collected while executing the test
   collectCoverage: true,
-
+  coverageThreshold: {
+    global: {
+      branches: 90,
+      functions: 90,
+      lines: 90,
+      statements: 90,
+    },
+  },
+  // 这个配置项可以指定 Jest 应该运行哪些测试文件。默认情况下， Jest 会查找 .test.js 或者 .spec.js 结尾的文件。如果你想修改这个行为，可以通过 testMatch 配置项来指定测试文件的匹配规则。
+  testMatch: ['**/test/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[tj]s?(x)'],
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   // collectCoverageFrom: undefined,
 
