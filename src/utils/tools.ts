@@ -9,6 +9,7 @@ export function isRepeat(arr: (number | string)[]) {
       }
     }
   }
+  return false;
 }
 /**
  * 生成随机数

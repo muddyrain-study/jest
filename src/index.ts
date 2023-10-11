@@ -23,7 +23,7 @@ function main(): void {
   let guessNum: string = '';
   let a: number = 0;
   let b: number = 0;
-  let chance: number = 10;
+  let chance: number = 5;
 
   // 电脑生成的4位不重复数字
   const comNum: number[] = randomNum();
@@ -78,6 +78,16 @@ function main(): void {
         console.log('你输入的数字重复了, 请重新输入!');
       }
     }
+  }
+  // 如果跳出了上面的while 说明游戏结束了 但是 分为 2 种情况
+  // 1. 提前猜对了   2. 机会用完了
+  if (chance === 0) {
+    // 进入此 if 说明是机会用完了
+    console.log('很遗憾,你已经没有机会了！');
+    console.log(`电脑生成的随机数为${comNum}`);
+  } else {
+    console.log('恭喜你,猜测正确,游戏结束');
+    console.log('Thank you for playing');
   }
 }
 
