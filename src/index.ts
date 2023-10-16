@@ -1,21 +1,31 @@
-import storage from './storage.js';
+import { startTimer, stopTimer } from './tools.js';
 
 // 获取 DOM 元素
-const saveBtn = document.getElementById('saveBtn') as HTMLButtonElement;
-const getBtn = document.getElementById('getBtn') as HTMLButtonElement;
-const content = document.getElementById('content') as HTMLInputElement;
-const username = document.getElementById('username') as HTMLSpanElement;
+const startTimerBtn = document.getElementById(
+  'startTimerBtn'
+) as HTMLButtonElement;
+const stopTimerBtn = document.getElementById(
+  'stopTimerBtn'
+) as HTMLButtonElement;
+const startTimeoutBtn = document.getElementById(
+  'startTimeoutBtn'
+) as HTMLButtonElement;
+const stopTimeoutBtn = document.getElementById(
+  'stopTimeoutBtn'
+) as HTMLButtonElement;
+const num1 = document.getElementById('num1') as HTMLElement;
+const num2 = document.getElementById('num2') as HTMLElement;
 
-saveBtn.addEventListener('click', () => {
-  storage.set('user', content.value);
-  content.value = '';
+let counter1 = 0;
+let counter2 = 0;
+let timerId: NodeJS.Timeout | undefined;
+let timeroutId: NodeJS.Timeout | undefined;
+startTimerBtn.addEventListener('click', () => {
+  timerId = startTimer(() => {
+    counter1++;
+    num1.innerHTML = counter1.toString();
+  }, 1000);
 });
-
-getBtn.addEventListener('click', () => {
-  const value = storage.get('user');
-  if (value !== null) {
-    username.innerHTML = value;
-  } else {
-    username.innerHTML = '';
-  }
+stopTimerBtn?.addEventListener('click', () => {
+  stopTimer(timerId);
 });
