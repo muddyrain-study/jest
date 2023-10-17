@@ -4,27 +4,30 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "build": "tsc"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muddyrain-study/duyi-jest.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "@types/jest": "^29.5.5",
-    "jest": "^29.7.0"
+  "bugs": {
+    "url": "https://github.com/muddyrain-study/duyi-jest/issues"
   },
-  "dependencies": {
-    "-": "^0.0.1",
-    "@babel/plugin-transform-modules-commonjs": "^7.23.0",
-    "@babel/types": "^7.23.0",
-    "axios": "^1.5.1",
-    "jest-environment-jsdom": "^29.7.0",
-    "jest-fetch-mock": "^3.0.3",
-    "jest-location-mock": "^2.0.0",
-    "readline-sync": "^1.4.10",
-    "ts-jest": "^29.1.1",
+  "homepage": "https://github.com/muddyrain-study/duyi-jest#readme",
+  "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.8.1",
+    "html-webpack-plugin": "^5.5.3",
+    "mini-css-extract-plugin": "^2.7.6",
+    "ts-loader": "^9.5.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
   }
 }
