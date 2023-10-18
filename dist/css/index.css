@@ -1,3 +1,6 @@
+/*!*********************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/css/index.css ***!
+  \*********************************************************************/
 /* 整个游戏的样式 */
 
 #game{
@@ -14,7 +17,7 @@
 #game .sky{
     width: 1600px;
     height: 600px;
-    background: url('../img/sky.png');
+    background: url(../c39946328a77598594a5.png);
     position: absolute;
     left: 0;
     top: 0;
@@ -25,7 +28,7 @@
 #game .land{
     width: 1600px;
     height: 112px;
-    background: url('../img/land.png');
+    background: url(../381ac3ae94a6623f8ca9.png);
     position: absolute;
     left: 0;
     bottom: 0;
@@ -41,7 +44,7 @@
 /* 水管的样式 */
 
 #game .pipeup{
-    background: url('../img/pipeDown.png') no-repeat left bottom;
+    background: url(../93f79e3e4d04570e88e8.png) no-repeat left bottom;
     width: 52px;
     height: 200px;
     position: absolute;
@@ -50,7 +53,7 @@
 }
 
 #game .pipedown{
-    background: url('../img/pipeUp.png') no-repeat;
+    background: url(../9091e81d779983a13a58.png) no-repeat;
     width: 52px;
     height: 200px;
     position: absolute;
@@ -64,7 +67,7 @@
 #game .bird{
     width: 33px;
     height: 26px;
-    background: url('../img/bird.png');
+    background: url(../e87cb57892e9af3b5645.png);
     position: absolute;
     left: 200px;
     top: 150px;
