@@ -1,24 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-
+import useCounter from './hooks/useCounter';
 function App() {
+  const [current, { inc, dec, set, reset }] = useCounter(5, {
+    min: 0,
+    max: 10,
+  });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <div>{current}</div>
+      <button onClick={() => dec(1)}>-</button>
+      <button onClick={() => inc(1)}>+</button>
+      <button onClick={() => set(100)}>set</button>
+      <button onClick={() => reset()}>reset</button>
     </div>
   );
 }
